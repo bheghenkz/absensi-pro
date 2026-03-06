@@ -1,4 +1,4 @@
-name: Build WebView APK
+name: Build Webview APK
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Install Java
@@ -18,11 +18,12 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Create Android Project
+      - name: Clone Android Webview Project
         run: |
           git clone https://github.com/twaddington/android-webview-app.git
           cd android-webview-app
           sed -i 's|https://example.com|https://absensi.smilebots.my.id|g' app/src/main/res/values/strings.xml
+          chmod +x gradlew
           ./gradlew assembleDebug
 
       - name: Upload APK
