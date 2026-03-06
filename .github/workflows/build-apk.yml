@@ -20,7 +20,7 @@ jobs:
 
       - name: Download Android Webview Project
         run: |
-          wget https://github.com/twaddington/android-webview-app/archive/refs/heads/master.zip -O app.zip
+          wget https://github.com/twaddington/android-webview-app/archive/refs/heads/main.zip -O app.zip
           unzip app.zip
           mv android-webview-app-master android-webview-app
           cd android-webview-app
