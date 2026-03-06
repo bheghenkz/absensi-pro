@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build WebView APK
 
 on:
   push:
@@ -9,26 +9,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - name: Install Java
+        uses: actions/setup-java@v3
         with:
-          node-version: 18
+          distribution: 'temurin'
+          java-version: '17'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install Capacitor
-        run: npm install @capacitor/core @capacitor/cli @capacitor/android
-
-      - name: Init Capacitor
+      - name: Create Android Project
         run: |
-          npx cap init absensi-pro com.absensi.pro
-          npx cap add android
-
-      - name: Build APK
-        run: |
-          cd android
+          git clone https://github.com/twaddington/android-webview-app.git
+          cd android-webview-app
+          sed -i 's|https://example.com|https://absensi.smilebots.my.id|g' app/src/main/res/values/strings.xml
           ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: absensi-apk
+          path: android-webview-app/app/build/outputs/apk/debug/app-debug.apk
