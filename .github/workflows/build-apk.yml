@@ -18,9 +18,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Clone Android Webview Project
+      - name: Download Android Webview Project
         run: |
-          git clone https://github.com/twaddington/android-webview-app.git
+          wget https://github.com/twaddington/android-webview-app/archive/refs/heads/master.zip -O app.zip
+          unzip app.zip
+          mv android-webview-app-master android-webview-app
           cd android-webview-app
           sed -i 's|https://example.com|https://absensi.smilebots.my.id|g' app/src/main/res/values/strings.xml
 
